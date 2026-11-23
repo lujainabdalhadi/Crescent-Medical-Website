@@ -1,0 +1,247 @@
+﻿@model IEnumerable<MedicalCompany.Models.Product>
+@using MedicalCompany.Models
+
+@{
+    var cart = ViewBag.Cart as List<EnquiryItem> ?? new List<EnquiryItem>();
+    ViewData["Title"] = "My Enquiry";
+}
+
+<section class="enquiry-page">
+    <div class="enquiry-container">
+        <h1>My Enquiry</h1>
+        <p class="enquiry-subtitle">Review your selected products before sending your enquiry.</p>
+
+        @if (!Model.Any())
+        {
+            <div class="empty-enquiry">
+                <h3>Your enquiry list is empty</h3>
+                <a asp-controller="Product" asp-action="Index">Browse Products</a>
+            </div>
+        }
+        else
+        {
+            <div class="enquiry-table-wrap">
+                <table class="enquiry-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Item Code</th>
+                            <th>Quantity</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            var item = cart.FirstOrDefault(x => x.ProductId == product.ProductId);
+
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(product.ImageUrl))
+                                        {
+                                            <img class="enquiry-product-image"
+                                                 src="@product.ImageUrl"
+                                                 alt="@product.Name" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <strong>@product.Name</strong>
+                                        <div class="product-size">Size: @product.Size</div>
+                                    </td>
+                                    <td>@product.ProductCode</td>
+                                    <td>
+                                        <form asp-action="Update" method="post" class="quantity-form">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@product.ProductId" />
+                                            <input type="number" name="quantity"
+                                                   value="@item.Quantity" min="1" max="999" required />
+                                            <button type="submit" class="update-button">Update</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form asp-action="Remove" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@product.ProductId" />
+                                            <button type="submit" class="remove-button" aria-label="Remove @product.Name">×</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="enquiry-actions">
+                <a asp-controller="Product" asp-action="Index" class="continue-button">
+                    Continue Shopping
+                </a>
+                <a asp-controller="Enquiry" asp-action="Send" class="send-button">
+                    SEND ENQUIRY
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .enquiry-page {
+        padding: 55px 20px 80px;
+        color: #101b50;
+        min-height: 400px;
+    }
+
+    .enquiry-container {
+        max-width: 1250px;
+        margin: 0 auto;
+    }
+
+        .enquiry-container h1 {
+            margin: 0 0 8px;
+            font-size: 36px;
+            font-weight: 800;
+            color: #101b50;
+        }
+
+    .enquiry-subtitle {
+        margin: 0 0 32px;
+        color: #718096;
+        font-size: 14px;
+    }
+
+    .enquiry-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .enquiry-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #e4e9f5;
+        text-align: center;
+    }
+
+        .enquiry-table th {
+            padding: 18px 12px;
+            background: #f8faff;
+            color: #101b50;
+            font-weight: 700;
+            border: 1px solid #e4e9f5;
+        }
+
+        .enquiry-table td {
+            padding: 22px 14px;
+            border: 1px solid #e4e9f5;
+            color: #17234f;
+        }
+
+    .enquiry-product-image {
+        width: 120px;
+        height: 110px;
+        object-fit: contain;
+    }
+
+    .product-size {
+        margin-top: 8px;
+        color: #718096;
+        font-size: 13px;
+    }
+
+    .quantity-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .quantity-form input {
+            width: 75px;
+            padding: 9px;
+            border: 1px solid #d9e1f2;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+    .update-button,
+    .remove-button,
+    .continue-button,
+    .send-button {
+        cursor: pointer;
+        text-decoration: none;
+        border: 0;
+        border-radius: 3px;
+        font-weight: 700;
+    }
+
+    .update-button {
+        padding: 10px 12px;
+        background: #eef3fa;
+        color: #101b50;
+    }
+
+    .remove-button {
+        background: transparent;
+        color: #101b50;
+        font-size: 25px;
+    }
+
+    .enquiry-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-top: 28px;
+    }
+
+    .continue-button {
+        padding: 14px 20px;
+        color: #101b50;
+        background: #f1f5fb;
+    }
+
+    .send-button {
+        display: inline-block;
+        padding: 17px 35px;
+        background: #1800c9;
+        color: #fff;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+
+    .empty-enquiry {
+        padding: 50px 20px;
+        text-align: center;
+        border: 1px solid #e4e9f5;
+    }
+
+        .empty-enquiry a {
+            color: #168fe5;
+        }
+
+    @@media (max-width: 700px) {
+        .enquiry-page {
+            padding: 35px 12px 55px;
+        }
+
+        .enquiry-container h1 {
+            font-size: 28px;
+        }
+
+        .enquiry-table {
+            min-width: 750px;
+        }
+
+        .enquiry-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .continue-button,
+        .send-button {
+            text-align: center;
+        }
+    }
+</style>

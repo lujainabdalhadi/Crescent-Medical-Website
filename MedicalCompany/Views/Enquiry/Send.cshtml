@@ -1,0 +1,143 @@
+﻿
+@model MedicalCompany.Models.Enquiry
+
+@{
+    ViewData["Title"] = "Send Enquiry";
+}
+
+<section class="send-enquiry-page">
+    <div class="send-enquiry-container">
+        <h1>Send Enquiry</h1>
+        @if (ViewBag.Errors != null)
+{
+    <p style="color:red">@ViewBag.Errors</p>
+}
+        <p class="send-intro">Please fill in your contact details to submit your product enquiry.</p>
+
+        <form asp-controller="Enquiry" asp-action="Send" method="post" class="send-enquiry-form">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="validation-message"></div>
+
+            <div class="form-field">
+                <label asp-for="Name">Name *</label>
+                <input asp-for="Name" placeholder="Your full name" required />
+                <span asp-validation-for="Name" class="validation-message"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Email">Email *</label>
+                <input asp-for="Email" type="email" placeholder="Your email address" required />
+                <span asp-validation-for="Email" class="validation-message"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Phone">Phone *</label>
+                <input asp-for="Phone" type="tel" placeholder="Your phone number" required />
+                <span asp-validation-for="Phone" class="validation-message"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Message">Message</label>
+                <textarea asp-for="Message" rows="5" placeholder="Additional information (optional)"></textarea>
+                <span asp-validation-for="Message" class="validation-message"></span>
+            </div>
+
+            <button type="submit" class="send-enquiry-button">SEND ENQUIRY</button>
+        </form>
+    </div>
+</section>
+
+<style>
+    .send-enquiry-page {
+        padding: 55px 20px 80px;
+        color: #101b50;
+        min-height: 500px;
+    }
+
+    .send-enquiry-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    .send-enquiry-container h1 {
+        margin: 0 0 10px;
+        color: #101b50;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .send-intro {
+        margin: 0 0 32px;
+        color: #718096;
+        font-size: 14px;
+    }
+
+    .send-enquiry-form {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-field label {
+        color: #52647b;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .form-field input,
+    .form-field textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 15px;
+        border: 1px solid #dfe6f3;
+        border-radius: 3px;
+        background: #fff;
+        color: #101b50;
+        font: inherit;
+        outline-color: #168fe5;
+    }
+
+    .form-field textarea {
+        resize: vertical;
+    }
+
+    .send-enquiry-button {
+        align-self: flex-start;
+        min-width: 220px;
+        padding: 17px 28px;
+        border: 0;
+        border-radius: 3px;
+        background: #1800c9;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+
+    .send-enquiry-button:hover {
+        background: #12009e;
+    }
+
+    .validation-message {
+        color: #c62828;
+        font-size: 13px;
+    }
+
+    @@media (max-width: 600px) {
+        .send-enquiry-container h1 {
+            font-size: 30px;
+        }
+
+        .send-enquiry-button {
+            width: 100%;
+        }
+    }
+</style>

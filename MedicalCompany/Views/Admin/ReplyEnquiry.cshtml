@@ -1,0 +1,237 @@
+﻿
+@model MedicalCompany.Models.Enquiry
+
+@{
+    ViewData["Title"] = "Reply to Enquiry";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reply to Enquiry | Admin Panel</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f8fc;
+            color: #173d61;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            padding: 35px 22px;
+            background: #123f65;
+            color: white;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.5;
+            margin-bottom: 45px;
+        }
+
+        .brand span { color: #65c3ff; }
+
+        .nav-item {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active { background: #218bd0; }
+
+        .main {
+            margin-left: 250px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        h1 { margin: 0 0 10px; }
+
+        .muted { color: #71899a; }
+
+        .logout, .back {
+            display: inline-block;
+            padding: 12px 20px;
+            background: white;
+            border: 1px solid #dce8f1;
+            border-radius: 10px;
+            color: #173d61;
+            text-decoration: none;
+        }
+
+        .card {
+            max-width: 900px;
+            padding: 28px;
+            border: 1px solid #e0ebf4;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 8px 25px rgba(18, 63, 101, .04);
+        }
+
+        .field { margin-bottom: 20px; }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .field input, .field textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d8e4ed;
+            border-radius: 8px;
+            font: inherit;
+            color: #173d61;
+        }
+
+        .field textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .original-message {
+            padding: 15px;
+            background: #edf7ff;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .send {
+            padding: 13px 22px;
+            border: 0;
+            border-radius: 8px;
+            background: #218bd0;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .send:hover { background: #123f65; }
+
+        .error {
+            margin-bottom: 15px;
+            color: #b42318;
+        }
+
+        @@media (max-width: 800px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .brand { margin-bottom: 20px; }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar { align-items: flex-start; }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            CRESCENT<br />
+            <span>ADMIN PANEL</span>
+        </div>
+
+        <a class="nav-item" href="/Admin/Dashboard">Dashboard</a>
+        <a class="nav-item" href="/Admin/Products">Manage Products</a>
+        <a class="nav-item" href="/Admin/Categories">Manage Categories</a>
+        <a class="nav-item active" href="/Admin/Enquiries">Customer Enquiries</a>
+        <a class="nav-item" href="/Product">View Website Products</a>
+        <a class="nav-item" href="/">Visit Website</a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h1>Reply to Enquiry</h1>
+                <div class="muted">Review the customer's message and prepare a reply.</div>
+            </div>
+
+            <a class="logout" href="/Admin/Logout">Sign Out</a>
+        </div>
+
+        <section class="card">
+            <div class="field">
+                <label>Customer Name</label>
+                <input value="@Model.Name" readonly />
+            </div>
+
+            <div class="field">
+                <label>Customer Email</label>
+                <input value="@Model.Email" readonly />
+            </div>
+
+            <div class="field">
+                <label>Original Message</label>
+                <div class="original-message">@Model.Message</div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.AdminReply))
+            {
+                <div class="field">
+                    <label>Previously Saved Reply</label>
+                    <div class="original-message">@Model.AdminReply</div>
+                </div>
+            }
+
+            <form asp-controller="Admin"
+                  asp-action="ReplyEnquiry"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="id" value="@Model.EnquiryId" />
+
+                <div class="field">
+                    <label for="reply">Your Reply</label>
+                    <textarea id="reply"
+                              name="reply"
+                              required
+                              maxlength="5000"
+                              placeholder="Write your reply to the customer...">@Model.AdminReply</textarea>
+                </div>
+
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="error">@ViewBag.ErrorMessage</div>
+                }
+
+                <button type="submit" class="send">Save and Send Reply</button>
+                <a href="/Admin/Enquiries" class="back">Back to Enquiries</a>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

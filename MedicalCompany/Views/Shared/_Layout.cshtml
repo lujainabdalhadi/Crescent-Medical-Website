@@ -1,0 +1,619 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MedicalCompany</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" />
+    <link rel="stylesheet" href="~/css/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="~/css/aos.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <style>
+            /* Mobile menu - mobile screens only */
+            .cdf-mobile-menu-button {
+                display: none;
+                border: 0;
+                background: transparent;
+                color: #173d61;
+                font-size: 30px;
+                cursor: pointer;
+                padding: 5px 10px;
+            }
+
+            .cdf-mobile-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,.45);
+                z-index: 20000;
+            }
+
+            .cdf-mobile-drawer {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: min(320px, 85vw);
+                height: 100%;
+                background: #fff;
+                z-index: 20001;
+                padding: 25px 22px;
+                box-sizing: border-box;
+                transform: translateX(100%);
+                transition: transform .3s ease;
+                overflow-y: auto;
+            }
+
+                .cdf-mobile-drawer.open {
+                    transform: translateX(0);
+                }
+
+            .cdf-mobile-overlay.open {
+                display: block;
+            }
+
+            .cdf-mobile-drawer a {
+                display: block;
+                color: #173d61;
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: 600;
+                padding: 15px 5px;
+                border-bottom: 1px solid #edf1f5;
+            }
+
+            .cdf-mobile-drawer .cdf-mobile-submenu a {
+                padding: 11px 18px;
+                font-size: 13px;
+                font-weight: 500;
+            }
+
+            .cdf-mobile-close {
+                display: block;
+                margin-left: auto;
+                border: 0;
+                background: transparent;
+                color: #173d61;
+                font-size: 30px;
+                cursor: pointer;
+            }
+
+            @@media (max-width: 768px) {
+                header {
+                    height: 70px !important;
+                }
+
+                    header > div {
+                        height: 70px !important;
+                        padding: 0 14px !important;
+                    }
+
+                        header > div > a:first-child {
+                            width: auto !important;
+                            max-width: 75% !important;
+                        }
+
+                            header > div > a:first-child img {
+                                width: min(210px, 65vw) !important;
+                                max-height: 65px !important;
+                            }
+
+                .cdf-desktop-nav,
+                .cdf-desktop-actions {
+                    display: none !important;
+                }
+
+                .cdf-mobile-menu-button {
+                    display: block !important;
+                }
+
+                @@media (max-width: 768px) {
+                    .cdf-footer-inner {
+                        grid-template-columns: 1fr !important;
+                        gap: 28px !important;
+                        width: 90% !important;
+                    }
+
+                        .cdf-footer-inner > div {
+                            min-width: 0 !important;
+                            width: 100% !important;
+                        }
+
+                    .cdf-footer-description {
+                        white-space: normal !important;
+                        overflow-wrap: break-word;
+                    }
+
+                    .cdf-footer-contact {
+                        overflow-wrap: anywhere;
+                    }
+
+                    .cdf-footer {
+                        overflow-x: hidden;
+                    }
+                }
+            }
+    </style>
+</head>
+
+    <body>
+
+<header style="height:82px; background:#fff; border-bottom:1px solid #eef3f7; position:sticky; top:0; z-index:10000;">
+        <div style="
+        width:100%;
+max-width:1400px;
+height:82px;
+margin:0 auto;
+padding:0 24px;
+box-sizing:border-box;
+display:flex;
+align-items:center;
+justify-content:space-between;
+            ">
+
+            <!-- Logo -->
+            <!-- Logo -->
+            <a asp-controller="Home"
+               asp-action="Index"
+               style="
+                width:250px;
+                display:flex;
+                align-items:center;
+                text-decoration:none;
+                ">
+
+            <img src="~/images/home/crescent-logo-white.jpg"
+     alt="Crescent Diagnostics Factory"
+     style="width:250px; height:auto; max-height:82px; object-fit:contain; display:block;" />
+            </a>
+
+            <!-- Navigation -->
+            <nav class="cdf-desktop-nav" style="
+                display:flex;
+                align-items:center;
+                gap:34px;
+                height:72px;
+                ">
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   style="
+                    color:#173d61;
+                    text-decoration:none;
+                    font-size:13px;
+                    font-weight:600;
+                    white-space:nowrap;
+                    ">
+                    Home
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="About"
+                   style="
+                    color:#173d61;
+                    text-decoration:none;
+                    font-size:13px;
+                    font-weight:600;
+                    white-space:nowrap;
+                    ">
+                    About Us
+                </a>
+                <div style="
+                    position:relative;
+                    height:72px;
+                    display:flex;
+                    align-items:center;
+                    "
+                     onmouseenter="document.getElementById('cdfProductMenu').style.display='block'"
+                     onmouseleave="document.getElementById('cdfProductMenu').style.display='none'">
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       style="
+                        color:#173d61;
+                        text-decoration:none;
+                        font-size:13px;
+                        font-weight:600;
+                        white-space:nowrap;
+                        ">
+                        Products +
+                    </a>
+
+                    <div id="cdfProductMenu"
+                         style="
+                        display:none;
+                        position:absolute;
+                        top:72px;
+                        left:-20px;
+                        width:250px;
+                        background:#173d61;
+                        padding:12px 0;
+                        z-index:999999;
+                        box-shadow:0 10px 25px rgba(0,0,0,.15);
+                        ">
+
+                        <a asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-category="Clinical Chemistry"
+                           style="display:block; padding:11px 22px; color:#fff; text-decoration:none; font-size:13px; font-weight:500;">
+                            Clinical Chemistry
+                        </a>
+                        <a asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-category="Serology Latex"
+                           style="display:block; padding:11px 22px; color:#fff; text-decoration:none; font-size:13px; font-weight:500;">
+                            Serology Latex
+                        </a>
+                        <a asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-category="Febrile Antigens"
+                           style="
+                        display:block;
+                        padding:11px 22px;
+                        color:#fff;
+                        text-decoration:none;
+                        font-size:13px;
+                        font-weight:500;
+                        ">Febrile Antigens</a>
+
+                       
+
+                        <a asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-category="Biological Stains"
+                           style="
+                        display:block;
+                        padding:11px 22px;
+                        color:#fff;
+                        text-decoration:none;
+                        font-size:13px;
+                        font-weight:500;
+                        ">Biological Stains</a>
+
+                        <a asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-category="Miscellaneous Items"
+                           style="
+                        display:block;
+                        padding:11px 22px;
+                        color:#fff;
+                        text-decoration:none;
+                        font-size:13px;
+                        font-weight:500;
+                        ">Miscellaneous Items</a>
+
+                    </div>
+                </div>
+
+                <a asp-controller="Home"
+                   asp-action="ProductRange"
+                   style="
+                    color:#173d61;
+                    text-decoration:none;
+                    font-size:13px;
+                    font-weight:600;
+                    white-space:nowrap;
+                    ">
+                    Product Range
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="Contact"
+                   style="
+                    color:#173d61;
+                    text-decoration:none;
+                    font-size:13px;
+                    font-weight:600;
+                    white-space:nowrap;
+                    ">
+                    Contact
+                </a>
+
+            </nav>
+
+            <div id="siteSearchBox" style="display:none; padding:20px; background:#f1f8ff; text-align:center;">
+                <form asp-controller="Product" asp-action="Index" method="get"
+                      style="display:flex; gap:10px; max-width:600px; margin:auto;">
+                    <input type="text" name="search" id="siteSearchInput"
+                           placeholder="Search for a product..."
+                           style="flex:1; min-width:0; padding:13px 16px; border:1px solid #d5e5f2; border-radius:10px; outline:none;" />
+                    <button type="submit"
+                            style="padding:12px 22px; border:0; border-radius:10px; background:#218bd0; color:white; font-weight:bold; cursor:pointer;">
+                        Search
+                    </button>
+                </form>
+            </div>
+
+
+            <!-- Right side -->
+            <div class="cdf-desktop-actions" style="
+                display:flex;
+                align-items:center;
+                gap:20px;
+                width:190px;
+                justify-content:flex-end;
+                ">
+
+             
+                <a href="#"
+                   id="searchToggle"
+                   style="color:#173d61; text-decoration:none; font-size:17px;"
+                   aria-label="Open search"
+                   aria-expanded="false">
+                    <span>⌕</span>
+                </a>
+
+
+                <a asp-controller="Home"
+                   asp-action="Contact"
+                   style="
+                    height:38px;
+                    padding:0 18px;
+                    display:flex;
+                    align-items:center;
+                    gap:8px;
+                    background:#168fe5;
+                    color:#fff;
+                    border-radius:22px;
+                    text-decoration:none;
+                    font-size:12px;
+                    font-weight:600;
+                    white-space:nowrap;
+                    ">
+                    Get in Touch →
+           </a>
+<div class="enquiry-cart-wrapper" style="position:relative; margin-left:18px;">
+    <button type="button" id="enquiryCartToggle"
+            aria-label="Open enquiry cart"
+            style="position:relative; border:0; background:transparent; cursor:pointer;
+                   color:#101b50; font-size:23px;">
+        🛒
+        <span id="enquiry-count"
+              style="position:absolute; top:-9px; right:-10px;
+                     background:#ff4267; color:white; border-radius:50%;
+                     min-width:17px; height:17px; font-size:10px;
+                     display:flex; align-items:center; justify-content:center;">
+            @(Context.Session.GetString("EnquiryCart") is string cartJson
+                ? (System.Text.Json.JsonSerializer.Deserialize<List<MedicalCompany.Models.EnquiryItem>>(cartJson)?.Sum(x => x.Quantity) ?? 0)
+                : 0)
+        </span>
+    </button>
+
+    <div id="enquiryCartDropdown"
+         style="display:none; position:absolute; top:45px; right:0; width:400px;
+                max-width:90vw; background:#fff; box-shadow:0 12px 35px #0002;
+                z-index:9999; padding:24px 22px;">
+
+        <div id="enquiryCartItems"></div>
+
+        <a asp-controller="Enquiry" asp-action="Index"
+           style="display:block; text-align:center; background:#168fe5;
+                  color:white; text-decoration:none; padding:18px 12px;
+                  margin-top:18px; font-weight:800; letter-spacing:2px;">
+            SEND ENQUIRY
+        </a>
+    </div>
+</div>
+         
+        </div>
+
+        <button type="button"
+                class="cdf-mobile-menu-button"
+                id="cdfMobileMenuOpen"
+                aria-label="Open menu">
+            ☰
+        </button>
+        </div>
+
+    </header>
+    <div class="cdf-mobile-overlay" id="cdfMobileOverlay"></div>
+
+    <div class="cdf-mobile-drawer" id="cdfMobileDrawer">
+        <button type="button" class="cdf-mobile-close"
+                id="cdfMobileMenuClose">
+            ×
+        </button>
+
+        <div style="text-align:center; color:#173d61; font-weight:900;
+            font-size:19px; padding:10px 0 20px;">
+            CRESCENT
+            <div style="font-size:10px; letter-spacing:2px;">
+                DIAGNOSTICS FACTORY
+            </div>
+        </div>
+
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <a asp-controller="Home" asp-action="About">About Us</a>
+        <a asp-controller="Product" asp-action="Index">Products</a>
+
+        <div class="cdf-mobile-submenu">
+            <a asp-controller="Product" asp-action="Index" asp-route-category="Clinical Chemistry">Clinical Chemistry</a>
+            <a asp-controller="Product" asp-action="Index" asp-route-category="Serology Latex">Serology Latex</a>
+            <a asp-controller="Product" asp-action="Index" asp-route-category="Febrile Antigens">Febrile Antigens</a>
+            <a asp-controller="Product" asp-action="Index" asp-route-category="Biological Stains">Biological Stains</a>
+            <a asp-controller="Product" asp-action="Index" asp-route-category="Miscellaneous Items">Miscellaneous Items</a>
+        </div>
+
+        <a asp-controller="Home" asp-action="ProductRange">Product Range</a>
+        <a asp-controller="Home" asp-action="Contact">Contact</a>
+        <a asp-controller="Enquiry" asp-action="Index">My Enquiry</a>
+    </div>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    
+<!-- FOOTER -->
+    <footer class="cdf-footer" style="display:block;width:100%;padding:55px 0 0;background-color:#218bd0 !important;color:#fff;box-sizing:border-box;">
+        <div class="cdf-footer-inner" style="width:min(1200px,90%);margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1.4fr .8fr;gap:35px;padding-bottom:40px;box-sizing:border-box;">
+        <div>
+                <div class="cdf-footer-logo" style="font-size:30px; font-weight:900; letter-spacing:3px; color:#fff;">
+                CRESCENT
+                    <span style="display:block; margin-top:5px; font-size:12px; font-weight:900; letter-spacing:2px; color:#fff;">
+                        DIAGNOSTICS FACTORY
+                    </span>
+            </div>
+                <p class="cdf-footer-description" style="font-size:12px; line-height:1.9; color:#ffffffb8; white-space:nowrap;">
+                    Diagnostic solutions built around quality, precision and reliability.
+                </p>
+        </div>
+
+          
+            <div>
+                <h4 style="color:#fff;">Quick Links</h4>
+                <ul style="list-style:none; padding:0; margin:0;">
+                    <li style="margin:12px 0;">
+                        <a asp-controller="Home" asp-action="Index" style="color:#fff !important; font-size:12px !important; font-weight:300 !important; text-decoration:none;">Home</a>
+                    </li>
+                    <li style="margin:12px 0;">
+                        <a asp-controller="Home" asp-action="About" style="color:#fff !important; font-size:12px !important; font-weight:300 !important; text-decoration:none;">About Us</a>
+                    </li>
+                    <li style="margin:12px 0;">
+                        <a asp-controller="Product" asp-action="Index" style="color:#fff !important; font-size:12px !important; font-weight:300 !important; text-decoration:none;">Products</a>
+                    </li>
+                    <li style="margin:12px 0;">
+                        <a asp-controller="Home" asp-action="Contact" style="color:#fff !important; font-size:12px !important; font-weight:300 !important; text-decoration:none;">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div>
+                <h4 style="color:#fff;">Contact Us</h4>
+                <div class="cdf-footer-contact" style="color:#fff; font-size:12px; line-height:1.9;">
+                    Phase-3, Jeddah Industrial City<br />
+                    P.O. Box 9939, Jeddah 21423<br />
+                    Kingdom of Saudi Arabia<br />
+                    Tel: +966 12 6080425<br />
+                    Email: info@crescentksa.com
+                </div>
+            </div>
+
+            <div>
+                <h4 style="color:#fff;">Website</h4>
+                <a href="https://www.crescentksa.com" target="_blank" rel="noopener" style="color:#fff !important;">
+                    crescentksa.com
+                </a>
+            </div>
+    </div>
+
+   
+        <div class="cdf-footer-bottom" style="width:100%; box-sizing:border-box; padding:28px 10px; border-top:1px solid #ffffff20; color:#ffffffb8; text-align:center; font-size:12px; line-height:1.5;">
+            © @DateTime.Now.Year Crescent Diagnostics Factory. All Rights Reserved.
+        </div>
+
+</footer>
+
+  
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const toggle = document.getElementById("searchToggle");
+                const box = document.getElementById("siteSearchBox");
+                const input = document.getElementById("siteSearchInput");
+
+                if (!toggle || !box || !input) return;
+
+                toggle.addEventListener("click", function(event) {
+                    event.preventDefault();
+
+                    const isHidden = box.style.display === "none";
+                    box.style.display = isHidden ? "block" : "none";
+                    toggle.setAttribute("aria-expanded", isHidden ? "true" : "false");
+
+                    if (isHidden) input.focus();
+                });
+            });
+    </script>
+    
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.getElementById('enquiryCartToggle');
+    const dropdown = document.getElementById('enquiryCartDropdown');
+    const itemsContainer = document.getElementById('enquiryCartItems');
+
+    if (!toggle || !dropdown || !itemsContainer) return;
+
+    toggle.addEventListener('click', async function () {
+        const isOpen = dropdown.style.display === 'block';
+        dropdown.style.display = isOpen ? 'none' : 'block';
+
+        if (isOpen) return;
+
+        itemsContainer.innerHTML = '<p>Loading enquiry items...</p>';
+
+        try {
+            const response = await fetch('/Enquiry/Preview');
+            if (!response.ok) throw new Error();
+
+            const items = await response.json();
+
+            if (!items.length) {
+                itemsContainer.innerHTML = '<p>Your enquiry list is empty.</p>';
+                return;
+            }
+
+            itemsContainer.innerHTML = items.map(item => `
+                <div style="display:flex; gap:18px; align-items:center; margin-bottom:20px;">
+                    <img src="${item.imageUrl || ''}" alt=""
+                         style="width:100px;height:100px;object-fit:contain;background:#f5f5f5;">
+                    <div style="color:#101b50;">
+                        <strong>${item.name}</strong>
+                        <p style="margin:6px 0;color:#858aa0;font-weight:600;">
+                            Cat.No.# ${item.productCode}
+                        </p>
+                        <strong>Qty: ${item.quantity}</strong>
+                    </div>
+                </div>
+            `).join('');
+        } catch {
+            itemsContainer.innerHTML =
+                '<p>Could not load enquiry items. Open My Enquiry to view them.</p>';
+        }
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('.enquiry-cart-wrapper')) {
+            dropdown.style.display = 'none';
+        }
+    });
+});
+</script>
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const openButton = document.getElementById("cdfMobileMenuOpen");
+                const closeButton = document.getElementById("cdfMobileMenuClose");
+                const drawer = document.getElementById("cdfMobileDrawer");
+                const overlay = document.getElementById("cdfMobileOverlay");
+
+                function openMenu() {
+                    drawer.classList.add("open");
+                    overlay.classList.add("open");
+                    document.body.style.overflow = "hidden";
+                }
+
+                function closeMenu() {
+                    drawer.classList.remove("open");
+                    overlay.classList.remove("open");
+                    document.body.style.overflow = "";
+                }
+
+                openButton.addEventListener("click", openMenu);
+                closeButton.addEventListener("click", closeMenu);
+                overlay.addEventListener("click", closeMenu);
+
+                drawer.querySelectorAll("a").forEach(function(link) {
+                    link.addEventListener("click", closeMenu);
+                });
+            });
+    </script>
+</body>
+</html>

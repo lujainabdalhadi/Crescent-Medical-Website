@@ -1,0 +1,173 @@
+﻿@model IEnumerable<MedicalCompany.Models.Product>
+
+<section class="cdf-products-page">
+
+    <div class="cdf-products-header">
+
+        <span class="cdf-label">
+            PRODUCT RANGE
+        </span>
+
+        <h1>Our Products</h1>
+
+        <p>
+            Explore Crescent Diagnostics' range of clinical diagnostic products.
+        </p>
+
+    </div>
+
+
+    <div class="cdf-product-grid">
+
+        @foreach (var product in Model)
+        {
+            <a asp-controller="Product"
+               asp-action="Details"
+               asp-route-id="@product.ProductId"
+               class="cdf-product-card">
+
+                <div class="cdf-product-image">
+                    <img src="@product.ImageUrl" alt="@product.Name" />
+                </div>
+
+                <div class="cdf-product-content">
+                    <span>@(product.Category?.Name ?? "CLINICAL CHEMISTRY")</span>
+                    <h2>@product.Name</h2>
+                   
+                </div>
+
+            </a>
+        }
+    </div>
+
+</section>
+
+
+<style>
+
+    .cdf-products-page {
+        background: #ffffff;
+        padding: 85px 0 110px;
+    }
+
+    .cdf-products-header {
+        width: min(1100px, 90%);
+        margin: 0 auto 55px;
+        text-align: center;
+    }
+
+        .cdf-products-header .cdf-label {
+            display: block;
+            margin-bottom: 12px;
+            color: #218bd0;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .cdf-products-header h1 {
+            margin: 0 0 14px;
+            color: #123f65;
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .cdf-products-header p {
+            max-width: 650px;
+            margin: 0 auto;
+            color: #6d8394;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+
+    .cdf-product-grid {
+        width: min(1100px, 90%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+    }
+
+
+    .cdf-product-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: #ffffff;
+        border: 1px solid #e1edf5;
+        border-radius: 18px;
+        overflow: hidden;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+        .cdf-product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(18, 63, 101, .10);
+        }
+
+
+    .cdf-product-image {
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5faff;
+        padding: 25px;
+    }
+
+        .cdf-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+
+    .cdf-product-content {
+        padding: 25px 25px 28px;
+    }
+
+        .cdf-product-content span {
+            display: block;
+            margin-bottom: 8px;
+            color: #218bd0;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .cdf-product-content h2 {
+            margin: 0 0 8px;
+            color: #123f65;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .cdf-product-content p {
+            margin: 0;
+            color: #71899a;
+            font-size: 13px;
+        }
+
+
+    @@media (max-width: 900px) {
+
+        .cdf-product-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+
+    @@media (max-width: 600px) {
+
+        .cdf-product-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cdf-products-header h1 {
+            font-size: 36px;
+        }
+    }
+
+</style>

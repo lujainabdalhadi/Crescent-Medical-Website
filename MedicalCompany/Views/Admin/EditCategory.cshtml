@@ -1,0 +1,118 @@
+﻿@model MedicalCompany.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Category | Crescent Diagnostics</title>
+    <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 35px 15px;
+                font-family: Arial, sans-serif;
+                background: #f3f8fc;
+                color: #173d61;
+            }
+
+            .container {
+                max-width: 750px;
+                margin: auto;
+                padding: 30px;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 8px 25px rgba(18, 63, 101, .08);
+            }
+
+            h1 {
+                margin-top: 0;
+            }
+
+            label {
+                display: block;
+                margin: 18px 0 7px;
+                font-weight: bold;
+            }
+
+            input, textarea, select {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccdce8;
+                border-radius: 8px;
+                font-size: 15px;
+            }
+
+            textarea {
+                min-height: 110px;
+                resize: vertical;
+            }
+
+            button, .back {
+                display: inline-block;
+                margin-top: 22px;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 8px;
+                background: #218bd0;
+                color: white;
+                text-decoration: none;
+                cursor: pointer;
+                font-size: 15px;
+            }
+
+            .back {
+                background: #71899a;
+                margin-left: 8px;
+            }
+
+            .error {
+                color: #c62828;
+                margin-top: 12px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Category</h1>
+
+        <div asp-validation-summary="All" class="error"></div>
+
+        <form asp-controller="Admin"
+              asp-action="EditCategory"
+              asp-route-id="@Model.CategoryId"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="CategoryId" />
+            <input type="hidden" asp-for="ImageUrl" />
+            <input type="hidden" asp-for="CreatedAt" />
+
+            <label asp-for="Name">Category Name</label>
+            <input asp-for="Name" required />
+
+            <label asp-for="Description">Description</label>
+            <textarea asp-for="Description"></textarea>
+
+            <label asp-for="IsActive">Status</label>
+            <select asp-for="IsActive">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+
+            <button type="submit">Save Changes</button>
+            <a href="/Admin/Categories" class="back">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,209 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard | Crescent Diagnostics</title>
+
+    <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: #f3f8fc;
+                color: #173d61;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 250px;
+                padding: 35px 22px;
+                background: #123f65;
+                color: white;
+            }
+
+            .brand {
+                font-size: 20px;
+                font-weight: bold;
+                line-height: 1.5;
+                margin-bottom: 45px;
+            }
+
+                .brand span {
+                    color: #65c3ff;
+                }
+
+            .nav-item {
+                display: block;
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                color: white;
+                text-decoration: none;
+            }
+
+                .nav-item.active,
+                .nav-item:hover {
+                    background: #218bd0;
+                }
+
+            .main {
+                margin-left: 250px;
+                padding: 40px;
+            }
+
+            .topbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                margin-bottom: 35px;
+            }
+
+            h1 {
+                margin: 0 0 10px;
+                font-size: 32px;
+            }
+
+            .muted {
+                color: #71899a;
+            }
+
+            .logout {
+                padding: 12px 20px;
+                background: white;
+                border: 1px solid #dce8f1;
+                border-radius: 10px;
+                color: #173d61;
+                text-decoration: none;
+            }
+
+            .welcome {
+                padding: 30px;
+                margin-bottom: 28px;
+                border-radius: 18px;
+                color: white;
+                background: linear-gradient(120deg, #123f65, #218bd0);
+            }
+
+                .welcome h2 {
+                    margin-top: 0;
+                }
+
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 22px;
+            }
+
+            .card {
+                padding: 27px;
+                border: 1px solid #e0ebf4;
+                border-radius: 16px;
+                background: white;
+                box-shadow: 0 8px 25px rgba(18, 63, 101, .04);
+            }
+
+                .card h3 {
+                    margin-top: 0;
+                }
+
+                .card p {
+                    color: #71899a;
+                    line-height: 1.6;
+                }
+
+                .card a {
+                    display: inline-block;
+                    margin-top: 10px;
+                    color: #218bd0;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+
+            @@media (max-width: 700px) {
+                .sidebar {
+                    position: static;
+                    width: 100%;
+                }
+
+                .main {
+                    margin-left: 0;
+                    padding: 22px;
+                }
+
+                .cards {
+                    grid-template-columns: 1fr;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            CRESCENT<br />
+            <span>ADMIN PANEL</span>
+        </div>
+
+        <a class="nav-item active" href="/Admin/Dashboard">Dashboard</a>
+        <a class="nav-item" href="/Admin/Products">Manage Products</a>
+        <a class="nav-item" href="/Admin/Categories">Manage Categories</a>
+        <a class="nav-item" href="/Admin/Enquiries">Customer Enquiries</a>
+        <a class="nav-item" href="/Admin/CreateProduct">+ Add New Product</a>
+        <a class="nav-item" href="/Product">View Website Products</a>
+        <a class="nav-item" href="/">Visit Website</a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <div class="muted">Manage Crescent Diagnostics website</div>
+            </div>
+
+            <a class="logout" href="/Admin/Logout">Sign Out</a>
+        </div>
+
+        <section class="welcome">
+            <h2>Welcome to Admin Panel</h2>
+            <p>Manage your products and keep your website organized.</p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <h3>Add New Product</h3>
+                <p>Add a new product to your database and display it on your website.</p>
+                <a href="/Admin/CreateProduct">+ Add Product →</a>
+            </div>
+            <div class="card">
+                <h3>Products</h3>
+                <p>View the products currently displayed on your website.</p>
+                <a href="/Product">View Products →</a>
+            </div>
+
+            <div class="card">
+                <h3>Categories</h3>
+                <p>Browse the product categories on the website.</p>
+                <a href="/Category">View Categories →</a>
+            </div>
+            <div class="card">
+    <h3>Customer Enquiries</h3>
+    <p>View customer messages and manage incoming product enquiries.</p>
+    <a href="/Admin/Enquiries">View Enquiries →</a>
+</div>
+        </section>
+    </main>
+</body>
+</html>

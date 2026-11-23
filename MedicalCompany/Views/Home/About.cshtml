@@ -1,0 +1,1289 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+<style>
+    .about-page {
+        --navy: #123f65;
+        --blue: #218bd0;
+        --muted: #71879a;
+        --pale: #eff8ff;
+        color: var(--navy);
+        overflow: hidden;
+        background: #fff;
+    }
+
+        .about-page * {
+            box-sizing: border-box;
+        }
+
+    .about-container {
+        width: min(1160px, 90%);
+        margin: auto;
+    }
+
+    .about-eyebrow {
+        display: inline-block;
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .about-hero {
+        position: relative;
+        padding: 90px 0;
+        background: linear-gradient(115deg, #eef8ff 0%, #fff 75%);
+    }
+
+    .about-hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 65px;
+    }
+
+    .about-hero h1 {
+        margin: 20px 0;
+        font-size: clamp(38px, 4.5vw, 59px);
+        line-height: 1.12;
+        font-weight: 850;
+        letter-spacing: -1.5px;
+        animation: aboutReveal .8s ease both;
+    }
+
+        .about-hero h1 span,
+        .about-story h2 span,
+        .about-quality h2 span {
+            color: var(--blue);
+        }
+
+    .about-hero-copy {
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.9;
+        animation: aboutReveal .8s .15s ease both;
+    }
+
+    .about-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+        padding: 15px 25px;
+        border-radius: 30px;
+        background: var(--navy);
+        color: white !important;
+        text-decoration: none !important;
+        font-size: 12px;
+        font-weight: 800;
+        transition: background .25s, transform .25s;
+    }
+
+        .about-button:hover {
+            background: var(--blue);
+            transform: translateY(-3px);
+        }
+
+    .about-hero-visual {
+        position: relative;
+        min-width: 0;
+        animation: aboutReveal .9s .1s ease both;
+    }
+
+    .about-hero-image {
+        width: 100%;
+        height: 430px;
+        object-fit: cover;
+        border-radius: 24px;
+        box-shadow: 0 25px 60px #123f651a;
+        animation: aboutFloat 6s ease-in-out infinite;
+    }
+
+    .about-image-tag {
+        position: absolute;
+        left: -22px;
+        bottom: 25px;
+        max-width: 240px;
+        padding: 19px 22px;
+        border: 1px solid #e0edf7;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow: 0 12px 35px #123f6515;
+    }
+
+        .about-image-tag strong {
+            display: block;
+            font-size: 25px;
+            font-weight: 850;
+        }
+
+        .about-image-tag span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+    .about-story {
+        padding: 100px 0;
+    }
+
+    .about-story-grid {
+        display: grid;
+        grid-template-columns: .9fr 1.1fr;
+        align-items: center;
+        gap: 80px;
+    }
+
+    .about-story-visual {
+        position: relative;
+    }
+
+    .about-story-image {
+        width: 100%;
+        height: 390px;
+        object-fit: cover;
+        border-radius: 22px;
+    }
+
+    .about-story h2,
+    .about-quality h2 {
+        margin: 17px 0 22px;
+        font-size: clamp(30px, 3.4vw, 43px);
+        font-weight: 850;
+        line-height: 1.2;
+    }
+
+    .about-story p,
+    .about-quality p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.95;
+    }
+
+    .about-story-note {
+        margin-top: 25px;
+        padding: 18px 20px;
+        border-left: 4px solid var(--blue);
+        border-radius: 0 12px 12px 0;
+        background: var(--pale);
+        color: var(--navy);
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .about-impact {
+        padding: 70px 0;
+        background: linear-gradient(120deg, #123f65, #17649a);
+        color: white;
+    }
+
+    .about-impact-heading {
+        margin-bottom: 38px;
+        text-align: center;
+    }
+
+    .about-impact .about-eyebrow {
+        color: #8ed0ff;
+    }
+
+    .about-impact h2 {
+        margin: 14px 0 0;
+        font-size: clamp(28px, 3vw, 39px);
+        font-weight: 850;
+    }
+
+    .about-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .about-stat {
+        padding: 27px 12px;
+        border: 1px solid #ffffff30;
+        border-radius: 17px;
+        background: #ffffff0b;
+        text-align: center;
+        transition: background .3s, transform .3s;
+    }
+
+        .about-stat:hover {
+            background: #ffffff16;
+            transform: translateY(-6px);
+        }
+
+        .about-stat strong {
+            display: block;
+            margin-bottom: 9px;
+            color: #8ed0ff;
+            font-size: 34px;
+            font-weight: 850;
+        }
+
+        .about-stat span {
+            color: #e0f0ff;
+            font-size: 12px;
+        }
+
+    .about-mission {
+        padding: 90px 0;
+        background: #f2f8fd;
+    }
+
+    .about-mission-grid {
+        display: grid;
+        grid-template-columns: .8fr 1.2fr;
+        gap: 65px;
+        align-items: start;
+    }
+
+    .about-mission h2 {
+        margin: 16px 0 0;
+        font-size: 37px;
+        line-height: 1.2;
+        font-weight: 850;
+    }
+
+    .about-mission-copy {
+        padding-left: 25px;
+        border-left: 2px solid #c6e7ff;
+    }
+
+        .about-mission-copy p {
+            margin: 0 0 17px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 2;
+        }
+
+    .about-values {
+        padding: 95px 0;
+    }
+
+    .about-section-heading {
+        max-width: 650px;
+        margin: 0 auto 45px;
+        text-align: center;
+    }
+
+        .about-section-heading h2 {
+            margin: 15px 0;
+            font-size: clamp(30px, 3.5vw, 43px);
+            font-weight: 850;
+        }
+
+        .about-section-heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+    .about-values-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .about-value-card {
+        position: relative;
+        padding: 27px 23px;
+        border: 1px solid #e0edf6;
+        border-radius: 18px;
+        background: #fff;
+        transition: transform .3s, box-shadow .3s, border-color .3s;
+    }
+
+        .about-value-card:hover {
+            transform: translateY(-7px);
+            border-color: #a9d9fb;
+            box-shadow: 0 18px 40px #123f6510;
+        }
+
+    .about-value-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 43px;
+        height: 43px;
+        margin-bottom: 24px;
+        border-radius: 13px;
+        background: #e8f5ff;
+        color: var(--blue);
+        font-size: 13px;
+        font-weight: 850;
+    }
+
+    .about-value-card h3 {
+        margin: 0 0 12px;
+        font-size: 17px;
+        font-weight: 850;
+    }
+
+    .about-value-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.85;
+    }
+
+    .about-quality {
+        padding: 80px 0;
+        background: var(--pale);
+    }
+
+    .about-quality-grid {
+        display: grid;
+        grid-template-columns: 1fr .85fr;
+        align-items: center;
+        gap: 70px;
+    }
+
+    .about-quality-visual {
+        position: relative;
+    }
+
+    .about-quality-image {
+        display: block;
+        width: 100%;
+        max-height: 360px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    .about-certifications {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-top: 22px;
+    }
+
+    .about-certification {
+        padding: 18px 12px;
+        border: 1px solid #d9eaf7;
+        border-radius: 13px;
+        background: white;
+        text-align: center;
+    }
+
+        .about-certification strong {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--navy);
+            font-size: 21px;
+            font-weight: 850;
+        }
+
+        .about-certification span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+    .about-page a:focus-visible {
+        outline: 3px solid #70bfff;
+        outline-offset: 4px;
+    }
+
+    @@keyframes aboutReveal {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes aboutFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    @@media (max-width: 900px) {
+        .about-hero-grid,
+        .about-story-grid,
+        .about-mission-grid,
+        .about-quality-grid {
+            grid-template-columns: 1fr;
+            gap: 35px;
+        }
+
+        .about-hero-visual {
+            max-width: 650px;
+        }
+
+        .about-stats-grid,
+        .about-values-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .about-mission-copy {
+            padding-left: 18px;
+        }
+
+        .about-image-tag {
+            left: 12px;
+        }
+    }
+
+    @@media (max-width: 560px) {
+        .about-hero,
+        .about-story,
+        .about-values {
+            padding: 60px 0;
+        }
+
+        .about-hero-image {
+            height: 300px;
+        }
+
+        .about-story-image {
+            height: 290px;
+        }
+
+        .about-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .about-values-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .about-stat strong {
+            font-size: 29px;
+        }
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .about-page *,
+        .about-page *::before,
+        .about-page *::after {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+    /* ===== About Us visual refresh: refined layout + scroll motion ===== */
+    .about-page {
+        --navy: #103b5c;
+        --blue: #168bd2;
+        --muted: #657f93;
+        --pale: #f2f9fe;
+        background: #fff;
+    }
+
+    .about-hero {
+        padding: clamp(64px, 8vw, 108px) 0;
+        background:
+            radial-gradient(circle at 82% 18%, rgba(33,139,208,.12), transparent 28%),
+            linear-gradient(135deg, #eff8ff 0%, #fff 58%, #f7fbff 100%);
+    }
+
+    .about-hero-grid { gap: clamp(32px, 5vw, 72px); }
+
+    .about-hero h1 {
+        max-width: 620px;
+        letter-spacing: -1.8px;
+        animation: aboutTextIn .8s cubic-bezier(.2,.7,.2,1) both;
+    }
+
+    .about-hero-copy { animation: aboutTextIn .8s .12s cubic-bezier(.2,.7,.2,1) both; }
+
+    .about-button {
+        box-shadow: 0 10px 24px rgba(18,63,101,.15);
+    }
+
+    .about-hero-visual,
+    .about-story-visual,
+    .about-quality-visual {
+        isolation: isolate;
+    }
+
+    .about-hero-visual::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 22px -18px -18px 22px;
+        border: 1px solid rgba(33,139,208,.22);
+        border-radius: 28px;
+        transition: transform .5s ease, border-color .5s ease;
+    }
+
+    .about-hero-visual:hover::before {
+        transform: translate(-5px,-5px);
+        border-color: rgba(33,139,208,.5);
+    }
+
+    .about-hero-image {
+        display: block;
+        border: 5px solid rgba(255,255,255,.88);
+        transition: transform .65s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease;
+    }
+
+    .about-hero-visual:hover .about-hero-image {
+        transform: translateY(-4px) scale(1.012);
+        box-shadow: 0 30px 70px rgba(18,63,101,.16);
+    }
+
+    .about-image-tag {
+        animation: aboutTagIn .8s .35s both;
+    }
+
+    .about-story { position: relative; }
+
+    .about-story-visual::after,
+    .about-quality-visual::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        width: 120px;
+        height: 120px;
+        right: -18px;
+        bottom: -18px;
+        border-radius: 24px;
+        background: #e8f5ff;
+    }
+
+    .about-story-image,
+    .about-quality-image {
+        display: block;
+        box-shadow: 0 18px 45px rgba(18,63,101,.09);
+        transition: transform .55s ease, box-shadow .55s ease;
+    }
+
+    .about-story-visual:hover .about-story-image,
+    .about-quality-visual:hover .about-quality-image {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 55px rgba(18,63,101,.15);
+    }
+
+    .about-story-note {
+        border-radius: 0 14px 14px 0;
+        box-shadow: 0 8px 24px rgba(18,63,101,.04);
+    }
+
+    .about-impact {
+        position: relative;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 10% 15%, rgba(142,208,255,.18), transparent 26%),
+            radial-gradient(circle at 92% 85%, rgba(142,208,255,.13), transparent 25%),
+            linear-gradient(120deg, #103b5c, #176da4);
+    }
+
+    .about-stat {
+        backdrop-filter: blur(8px);
+        transition: transform .35s ease, background .35s ease, border-color .35s ease;
+    }
+
+    .about-stat:hover {
+        transform: translateY(-8px);
+        border-color: #ffffff65;
+        background: #ffffff18;
+    }
+
+    .about-mission {
+        background:
+            radial-gradient(circle at 100% 0%, rgba(33,139,208,.07), transparent 30%),
+            #f4f9fd;
+    }
+
+    .about-mission-copy {
+        border-left: 3px solid #b9e2fb;
+    }
+
+    .about-values {
+        background:
+            radial-gradient(ellipse at 0% 100%, #eaf6ff 0, transparent 38%),
+            #f8fbff;
+    }
+
+    .about-values .about-value-card {
+        opacity: 1;
+    }
+
+    .about-quality {
+        background:
+            radial-gradient(circle at 5% 95%, rgba(33,139,208,.09), transparent 30%),
+            linear-gradient(120deg, #f1f9ff, #fff);
+    }
+
+    .about-certification {
+        transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+
+    .about-certification:hover {
+        transform: translateY(-5px);
+        border-color: #a9d9fb;
+        box-shadow: 0 12px 28px rgba(18,63,101,.08);
+    }
+
+    /* Elements enter gently as each section scrolls into view. */
+    .about-page .about-reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .about-page .about-reveal.from-left { transform: translateX(-34px); }
+    .about-page .about-reveal.from-right { transform: translateX(34px); }
+    .about-page .about-reveal.is-visible {
+        opacity: 1;
+        transform: translate(0,0);
+    }
+
+    @@keyframes aboutTextIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes aboutTagIn {
+        from { opacity: 0; transform: translateY(12px) scale(.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @@media (max-width: 900px) {
+        .about-hero-visual::before { inset: 12px -8px -8px 12px; }
+        .about-story-visual::after,
+        .about-quality-visual::after { width: 76px; height: 76px; right: -8px; bottom: -8px; }
+    }
+
+    @@media (max-width: 560px) {
+        .about-hero-visual::before { display: none; }
+        .about-page .about-reveal,
+        .about-page .about-reveal.from-left,
+        .about-page .about-reveal.from-right {
+            transform: translateY(18px);
+        }
+        .about-page .about-reveal.is-visible { transform: translateY(0); }
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .about-page .about-reveal {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+        .about-hero-visual::before,
+        .about-hero-image,
+        .about-story-image,
+        .about-quality-image,
+        .about-stat,
+        .about-certification {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+</style>
+
+<div class="about-page">
+
+    <section class="about-hero">
+        <div class="about-container about-hero-grid">
+
+            <div>
+                <span class="about-eyebrow">About Crescent Diagnostics</span>
+
+                <h1>
+                    Middle East Pioneer
+                    <span>in Biotechnology</span>
+                </h1>
+
+                <p class="about-hero-copy">
+                    CRESCENT DIAGNOSTICS is a subsidiary company of
+                    The Friends National Medical Co. Ltd., founded in
+                    1986 and headquartered in Jeddah, Saudi Arabia.
+                </p>
+
+                <a class="about-button"
+                   asp-controller="Product"
+                   asp-action="Index">
+                    Explore Our Products <span>→</span>
+                </a>
+            </div>
+
+            <div class="about-hero-visual">
+               <img class="about-hero-image"
+     src="~/images/about-laboratory.png"
+     alt="Clinical diagnostic laboratory" />
+
+                <div class="about-image-tag">
+                    <strong>Since 1986</strong>
+                    <span>Experience in clinical diagnostics</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="about-story">
+        <div class="about-container about-story-grid">
+
+          <div class="about-story-visual">
+    <img class="about-story-image"
+         src="~/images/about-story.png"
+         alt="Saudi laboratory technician working with diagnostic equipment" />
+</div>
+
+            <div>
+                <span class="about-eyebrow">Who We Are</span>
+
+                <h2>
+                    A trusted name in
+                    <span>clinical diagnostics.</span>
+                </h2>
+
+                <p>
+                    CRESCENT DIAGNOSTICS is engaged in the manufacturing
+                    and marketing of clinical diagnostic products for
+                    domestic and international markets.
+                </p>
+
+                <p>
+                    More than 170 diagnostic products are manufactured
+                    for use in clinical laboratories, with products
+                    supplied in Saudi Arabia and exported to more than
+                    30 countries.
+                </p>
+
+                <div class="about-story-note">
+                    The company is considered a pioneer in biotechnology
+                    for manufacturing and marketing clinical diagnostic
+                    products in the Middle East.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="about-impact">
+        <div class="about-container">
+
+            <div class="about-impact-heading">
+                <span class="about-eyebrow">Our Impact</span>
+                <h2>Experience built over decades</h2>
+            </div>
+
+            <div class="about-stats-grid">
+
+                <div class="about-stat">
+                    <strong class="about-counter" data-target="1986"
+                            data-format="year">0</strong>
+                    <span>Year Founded</span>
+                </div>
+
+                <div class="about-stat">
+                    <strong class="about-counter" data-target="170"
+                            data-suffix="+">0</strong>
+                    <span>Diagnostic Products</span>
+                </div>
+
+                <div class="about-stat">
+                    <strong class="about-counter" data-target="30"
+                            data-suffix="+">0</strong>
+                    <span>Countries Served</span>
+                </div>
+
+                <div class="about-stat">
+                    <strong>ISO</strong>
+                    <span>13485:2016</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="about-mission">
+        <div class="about-container about-mission-grid">
+
+            <div>
+                <span class="about-eyebrow">Our Mission</span>
+
+                <h2>
+                    Advancing healthcare through diagnostics.
+                </h2>
+            </div>
+
+            <div class="about-mission-copy">
+                <p>
+                    Crescent Diagnostics aims to contribute to the
+                    advancement of the health sector in Saudi Arabia
+                    and the Middle East through the manufacturing
+                    and supply of biochemical materials.
+                </p>
+
+                <p>
+                    The company seeks to reduce the time and financial
+                    load associated with importing these materials and
+                    to be recognized globally as a premier manufacturer
+                    of biotechnology for medical diagnostics.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+   
+    <section class="about-values">
+        <div class="about-container">
+
+            <div class="about-section-heading">
+                <span class="about-eyebrow">OUR VALUES</span>
+                <h2>What guides our work</h2>
+                <p>
+                    The principles behind our commitment to quality,
+                    trusted relationships and reliable diagnostic products.
+                </p>
+            </div>
+
+            <div class="about-values-grid">
+
+                <article class="about-value-card">
+                    <div class="value-top">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3 19 6V11C19 15.5 16 19 12 21C8 19 5 15.5 5 11V6L12 3Z"
+                                      stroke="currentColor" stroke-width="1.7"
+                                      stroke-linejoin="round" />
+                                <path d="m9 12 2 2 4-4"
+                                      stroke="currentColor" stroke-width="1.7"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="value-number">01</span>
+                    </div>
+
+                    <h3>Fair Trade</h3>
+                    <p>
+                        Building fair business relationships based on
+                        mutual benefit and trust.
+                    </p>
+
+                    <div class="value-bottom">
+                        <span>FAIRNESS &amp; TRUST</span>
+                        <span class="value-arrow">↗</span>
+                    </div>
+                </article>
+
+
+                <article class="about-value-card">
+                    <div class="value-top">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-4 2 1.3-4.2A7.5 7.5 0 1 1 20 11.5Z"
+                                      stroke="currentColor" stroke-width="1.7"
+                                      stroke-linejoin="round" />
+                                <path d="m8 11 2.5 2.5L16 8"
+                                      stroke="currentColor" stroke-width="1.7"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="value-number">02</span>
+                    </div>
+
+                    <h3>Customer Satisfaction</h3>
+                    <p>
+                        Supporting customers through responsive,
+                        efficient and attentive customer care.
+                    </p>
+
+                    <div class="value-bottom">
+                        <span>CUSTOMER FIRST</span>
+                        <span class="value-arrow">↗</span>
+                    </div>
+                </article>
+
+
+                <article class="about-value-card">
+                    <div class="value-top">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"
+                                      stroke="currentColor" stroke-width="1.7"
+                                      stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="value-number">03</span>
+                    </div>
+
+                    <h3>Precision &amp; Integrity</h3>
+                    <p>
+                        Maintaining precision and integrity throughout
+                        our work and processes.
+                    </p>
+
+                    <div class="value-bottom">
+                        <span>QUALITY &amp; CARE</span>
+                        <span class="value-arrow">↗</span>
+                    </div>
+                </article>
+
+
+                <article class="about-value-card">
+                    <div class="value-top">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8m8.6 8.6 2.8 2.8M2 12h4m12 0h4M4.9 19.1l2.8-2.8m8.6-8.6 2.8-2.8"
+                                      stroke="currentColor" stroke-width="1.7"
+                                      stroke-linecap="round" />
+                                <circle cx="12" cy="12" r="4"
+                                        stroke="currentColor" stroke-width="1.7" />
+                            </svg>
+                        </div>
+                        <span class="value-number">04</span>
+                    </div>
+
+                    <h3>Innovation</h3>
+                    <p>
+                        Embracing innovation and future-oriented
+                        diagnostic manufacturing.
+                    </p>
+
+                    <div class="value-bottom">
+                        <span>LOOKING FORWARD</span>
+                        <span class="value-arrow">↗</span>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <style>
+            .about-values {
+                position: relative;
+                padding: 100px 0;
+                background: radial-gradient(ellipse at 0% 100%, #eaf6ff 0, transparent 38%), #f8fbff;
+            }
+
+                .about-values .about-section-heading {
+                    margin-bottom: 50px;
+                }
+
+                    .about-values .about-section-heading h2 {
+                        margin-top: 15px;
+                        color: #123f65;
+                        font-size: clamp(32px, 4vw, 44px);
+                        font-weight: 850;
+                    }
+
+                    .about-values .about-section-heading p {
+                        max-width: 620px;
+                        margin: 0 auto;
+                        line-height: 1.9;
+                    }
+
+            .about-values-grid {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 20px;
+            }
+
+            .about-values .about-value-card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 300px;
+                padding: 25px 23px 18px;
+                overflow: hidden;
+                border: 1px solid #dceaf6;
+                border-radius: 19px;
+                background: rgba(255, 255, 255, .92);
+                box-shadow: 0 8px 25px rgba(18, 63, 101, .035);
+                transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+            }
+
+                .about-values .about-value-card::before {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 4px;
+                    background: linear-gradient(90deg, #218bd0, #9bdbff);
+                    content: "";
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform .35s ease;
+                }
+
+                .about-values .about-value-card:hover {
+                    transform: translateY(-9px);
+                    border-color: #acd9f8;
+                    box-shadow: 0 22px 45px rgba(18, 63, 101, .11);
+                }
+
+                    .about-values .about-value-card:hover::before {
+                        transform: scaleX(1);
+                    }
+
+            .about-values .value-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 27px;
+            }
+
+            .about-values .value-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 58px;
+                height: 58px;
+                border-radius: 17px;
+                background: #eaf6ff;
+                color: #218bd0;
+                transition: background .3s ease, transform .3s ease;
+            }
+
+                .about-values .value-icon svg {
+                    width: 29px;
+                    height: 29px;
+                }
+
+            .about-values .about-value-card:hover .value-icon {
+                background: #d8efff;
+                transform: rotate(-5deg) scale(1.08);
+            }
+
+            .about-values .value-number {
+                color: #c0d9ec;
+                font-size: 30px;
+                font-weight: 850;
+                line-height: 1;
+            }
+
+            .about-values .about-value-card h3 {
+                margin: 0 0 12px;
+                color: #123f65;
+                font-size: 17px;
+                font-weight: 850;
+                line-height: 1.5;
+            }
+
+            .about-values .about-value-card p {
+                margin: 0 0 25px;
+                color: #71879a;
+                font-size: 13px;
+                line-height: 1.9;
+            }
+
+            .about-values .value-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                margin-top: auto;
+                padding-top: 15px;
+                border-top: 1px solid #edf3f8;
+                color: #218bd0;
+                font-size: 9px;
+                font-weight: 850;
+                letter-spacing: 1px;
+            }
+
+            .about-values .value-arrow {
+                font-size: 19px;
+                transition: transform .3s ease;
+            }
+
+            .about-values .about-value-card:hover .value-arrow {
+                transform: translate(3px, -3px);
+            }
+
+            @@media (max-width: 1000px) {
+                .about-values-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+
+            @@media (max-width: 560px) {
+                .about-values {
+                    padding: 65px 0;
+                }
+
+                .about-values-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .about-values .about-value-card {
+                    min-height: 265px;
+                }
+            }
+
+            @@media (prefers-reduced-motion: reduce) {
+                .about-values *,
+                .about-values *::before {
+                    transition: none !important;
+                }
+            }
+    </style>
+
+
+
+    <section class="about-quality">
+        <div class="about-container about-quality-grid">
+
+            <div>
+                <span class="about-eyebrow">Quality &amp; Certifications</span>
+
+                <h2>
+                    Precision at
+                    <span>every stage.</span>
+                </h2>
+
+                <p>
+                    Crescent Diagnostics applies stringent measures
+                    to ensure high quality and reliability, with
+                    meticulous control of its processes.
+                </p>
+
+                <p>
+                    The company works with research and development
+                    to ensure that quality products reach its customers.
+                </p>
+
+                <div class="about-certifications">
+                    <div class="about-certification">
+                        <strong>ISO</strong>
+                        <span>13485:2016</span>
+                    </div>
+
+                    <div class="about-certification">
+                        <strong>CE</strong>
+                        <span>Applicable products</span>
+                    </div>
+                </div>
+            </div>
+<div class="about-quality-visual">
+    <img class="about-quality-image"
+         src="~/images/about-quality.png"
+         alt="Medical diagnostic reagents and laboratory supplies" />
+</div>
+
+        </div>
+    </section>
+
+</div>
+
+<script>
+    (() => {
+        const page = document.querySelector(".about-page");
+        if (!page) return;
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const targets = [
+            [".about-story-visual", "from-left"],
+            [".about-story-grid > div:last-child", "from-right"],
+            [".about-impact-heading", ""],
+            [".about-stat", ""],
+            [".about-mission-grid > div:first-child", "from-left"],
+            [".about-mission-copy", "from-right"],
+            [".about-section-heading", ""],
+            [".about-value-card", ""],
+            [".about-quality-grid > div:first-child", "from-left"],
+            [".about-quality-visual", "from-right"]
+        ];
+
+        targets.forEach(([selector, direction]) => {
+            page.querySelectorAll(selector).forEach((element, index) => {
+                element.classList.add("about-reveal");
+                if (direction) element.classList.add(direction);
+                element.style.setProperty("--reveal-delay", `${Math.min(index * 100, 350)}ms`);
+            });
+        });
+
+        const revealElements = page.querySelectorAll(".about-reveal");
+        if (reduceMotion || !("IntersectionObserver" in window)) {
+            revealElements.forEach(element => element.classList.add("is-visible"));
+            return;
+        }
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.14, rootMargin: "0px 0px -35px 0px" });
+
+        revealElements.forEach(element => observer.observe(element));
+    })();
+</script>
+
+<script>
+    (() => {
+        const counters = document.querySelectorAll(
+            ".about-page .about-counter"
+        );
+
+        if (!counters.length) return;
+
+        const prefersReducedMotion =
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function animateCounter(counter) {
+            const target = Number(counter.dataset.target);
+            const suffix = counter.dataset.suffix || "";
+            const isYear = counter.dataset.format === "year";
+
+            if (prefersReducedMotion) {
+                counter.textContent = target + suffix;
+                return;
+            }
+
+            const duration = 1800;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const value = Math.floor(target * eased);
+
+                counter.textContent = value + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    counter.textContent = target + suffix;
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        const section = document.querySelector(".about-impact");
+
+        if (!section || !("IntersectionObserver" in window)) {
+            counters.forEach(animateCounter);
+            return;
+        }
+
+        let started = false;
+
+        const observer = new IntersectionObserver(entries => {
+            if (entries.some(entry => entry.isIntersecting) && !started) {
+                started = true;
+                counters.forEach(animateCounter);
+                observer.disconnect();
+            }
+        }, { threshold: 0.25 });
+
+        observer.observe(section);
+    })();
+</script>
+</div>

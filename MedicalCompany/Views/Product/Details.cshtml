@@ -1,0 +1,207 @@
+﻿@model MedicalCompany.Models.Product
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<section class="product-details-page">
+    <div class="product-main">
+
+        <div class="product-photo">
+            <img src="@Model.ImageUrl" alt="@Model.Name" />
+        </div>
+
+        <div class="product-info">
+            <h1>@Model.Name</h1>
+
+            <p class="product-description">@Model.Description</p>
+
+            <div class="sizes-title">SIZES:</div>
+            <div class="sizes-list">
+                @foreach (var size in (Model.Size ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <span>@size.Trim()</span>
+                }
+            </div>
+
+            <div class="code-title">Product Code:</div>
+            <div class="product-code">@Model.ProductCode</div>
+
+            <form id="addEnquiryForm" asp-controller="Enquiry" asp-action="Add" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.ProductId" />
+
+                <button type="submit" class="enquiry-button" id="enquiryButton">
+                    ADD TO ENQUIRY
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+
+</section>
+
+<style>
+    .product-details-page {
+        max-width: 1110px;
+        margin: 0 auto;
+        padding: 55px 25px 90px;
+        color: #101b50;
+    }
+
+    .product-main {
+        display: grid;
+        grid-template-columns: 340px minmax(0, 1fr);
+        gap: 34px;
+        align-items: start;
+    }
+
+    .product-photo {
+        width: 100%;
+        height: 305px;
+        padding: 15px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #dedede;
+        border-radius: 17px;
+    }
+
+        .product-photo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+    .product-info h1 {
+        margin: 0 0 13px;
+        font-size: 30px;
+        font-weight: 800;
+        color: #101b50;
+    }
+
+    .product-description {
+        margin: 0 0 24px;
+        color: #65758c;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .sizes-title,
+    .code-title {
+        margin: 18px 0 10px;
+        font-size: 10px;
+        font-weight: 800;
+        color: #111;
+    }
+
+    .sizes-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+        .sizes-list span,
+        .product-code {
+            display: inline-block;
+            padding: 6px 9px;
+            background: #f4f6fb;
+            color: #26365d;
+            font-size: 10px;
+        }
+
+    .enquiry-button {
+        display: block;
+        width: 162px;
+        min-height: 44px;
+        margin-top: 20px;
+        border: 0;
+        border-radius: 4px;
+        background: #ffe000;
+        color: #111;
+        font-size: 10px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+   
+   
+
+   
+        .tab-button.active {
+            background: #1800c9;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+  
+
+    @@media (max-width: 700px) {
+        .product-main {
+            grid-template-columns: 1fr;
+        }
+
+        .product-photo {
+            max-width: 420px;
+        }
+
+        .tabs-header {
+            width: 100%;
+        }
+
+        .tab-button {
+            min-width: 0;
+            flex: 1;
+        }
+    }
+</style>
+
+
+<script>
+    const enquiryForm = document.getElementById('addEnquiryForm');
+
+    if (enquiryForm) {
+        enquiryForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const button = document.getElementById('enquiryButton');
+            button.disabled = true;
+            button.textContent = 'ADDING...';
+
+            try {
+                const response = await fetch(enquiryForm.action, {
+                    method: 'POST',
+                    body: new FormData(enquiryForm),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    button.textContent = 'ADDED TO ENQUIRY';
+                    button.style.background = '#10c9a0';
+
+                    const counter = document.getElementById('enquiry-count');
+                    if (counter) {
+                        counter.textContent = result.count;
+                    }
+                } else {
+                    throw new Error(result.message || 'Could not add product');
+                }
+            } catch (error) {
+                button.textContent = 'ADD TO ENQUIRY';
+                button.style.background = '#ffe000';
+                button.disabled = false;
+                alert('Could not add product. Please try again.');
+            }
+        });
+    }
+</script>

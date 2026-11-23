@@ -1,0 +1,254 @@
+﻿
+@model IEnumerable<MedicalCompany.Models.Enquiry>
+
+@{
+    ViewData["Title"] = "Customer Enquiries";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer Enquiries | Admin Panel</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f8fc;
+            color: #173d61;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            padding: 35px 22px;
+            background: #123f65;
+            color: white;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.5;
+            margin-bottom: 45px;
+        }
+
+        .brand span { color: #65c3ff; }
+
+        .nav-item {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active { background: #218bd0; }
+
+        .main {
+            margin-left: 250px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        h1 { margin: 0 0 10px; }
+
+        .muted { color: #71899a; }
+
+        .logout {
+            padding: 12px 20px;
+            background: white;
+            border: 1px solid #dce8f1;
+            border-radius: 10px;
+            color: #173d61;
+            text-decoration: none;
+        }
+
+        .card {
+            padding: 24px;
+            border: 1px solid #e0ebf4;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 8px 25px rgba(18, 63, 101, .04);
+        }
+
+        .table-wrap { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e0ebf4;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #edf7ff;
+            color: #123f65;
+            white-space: nowrap;
+        }
+
+        td { overflow-wrap: anywhere; }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #fff3d6;
+            color: #8a6100;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .email {
+            color: #168bd2;
+            text-decoration: none;
+        }
+
+        .empty {
+            padding: 25px;
+            color: #71899a;
+            text-align: center;
+        }
+
+        @@media (max-width: 800px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .brand { margin-bottom: 20px; }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            CRESCENT<br />
+            <span>ADMIN PANEL</span>
+        </div>
+
+        <a class="nav-item" href="/Admin/Dashboard">Dashboard</a>
+        <a class="nav-item" href="/Admin/Products">Manage Products</a>
+        <a class="nav-item" href="/Admin/Categories">Manage Categories</a>
+        <a class="nav-item" href="/Admin/CreateProduct">+ Add New Product</a>
+        <a class="nav-item active" href="/Admin/Enquiries">Customer Enquiries</a>
+        <a class="nav-item" href="/Product">View Website Products</a>
+        <a class="nav-item" href="/">Visit Website</a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h1>Customer Enquiries</h1>
+                <div class="muted">View and manage customer messages</div>
+            </div>
+
+            <a class="logout" href="/Admin/Logout">Sign Out</a>
+        </div>
+
+        <section class="card">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="empty">No enquiries have been received yet.</div>
+            }
+            else
+            {
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Message</th>
+                                <th>Products</th>
+                                <th>Status</th>
+                                 <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var enquiry in Model)
+                            {
+                                <tr>
+                                    <td>@enquiry.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>@enquiry.Name</td>
+                                    <td>
+                                        <a class="email" href="mailto:@enquiry.Email">
+                                            @enquiry.Email
+                                        </a>
+                                    </td>
+                                    <td>@enquiry.Phone</td>
+                                   <td style="min-width:180px; white-space:pre-wrap;">@enquiry.Message</td>
+<td style="min-width:220px;">
+    @{
+        var enquiryItems = ((IEnumerable<MedicalCompany.Models.EnquiryItem>)ViewBag.EnquiryItems)
+            .Where(i => i.EnquiryId == enquiry.EnquiryId)
+            .ToList();
+    }
+
+    @if (enquiryItems.Any())
+    {
+        foreach (var item in enquiryItems)
+        {
+            <div style="margin-bottom:10px;">
+                <strong>@(item.Product?.Name ?? "Unknown product")</strong><br />
+                <span>Code: @(item.Product?.ProductCode ?? "N/A")</span><br />
+                <span>Quantity: @item.Quantity</span>
+            </div>
+        }
+    }
+    else
+    {
+        <span class="muted">No product linked</span>
+    }
+</td>
+                                    <td><span class="status">@enquiry.Status</span></td>
+                                    <td>
+    <a href="@Url.Action("ReplyEnquiry", "Admin", new { id = enquiry.EnquiryId })"
+       style="display:inline-block;padding:8px 14px;background:#218bd0;color:white;text-decoration:none;border-radius:7px;font-size:13px;font-weight:bold;white-space:nowrap;">
+        Reply →
+    </a>
+</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </section>
+    </main>
+</body>
+</html>

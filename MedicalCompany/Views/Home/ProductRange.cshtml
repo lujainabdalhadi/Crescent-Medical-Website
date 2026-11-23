@@ -1,0 +1,440 @@
+﻿@{
+    ViewData["Title"] = "Product Range";
+}
+
+<style>
+    .range-page {
+        --navy: #123f65;
+        --blue: #218bd0;
+        --muted: #71879a;
+        --pale: #f1f8ff;
+        background: #fff;
+        padding-bottom: 90px;
+        overflow: hidden;
+    }
+
+    .range-hero {
+        text-align: center;
+        padding: 85px 20px 65px;
+        background: linear-gradient(135deg, #edf7ff, #fff);
+    }
+
+    .range-eyebrow {
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .range-hero h1 {
+        margin: 15px 0;
+        color: var(--navy);
+        font-size: clamp(36px, 5vw, 54px);
+        font-weight: 850;
+        animation: rangeEnter .8s ease both;
+    }
+
+        .range-hero h1 span {
+            color: var(--blue);
+        }
+
+    .range-hero p {
+        max-width: 650px;
+        margin: auto;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.9;
+        animation: rangeEnter .8s .15s ease both;
+    }
+
+    .range-grid {
+        width: min(1150px, 90%);
+        margin: 15px auto 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+    }
+
+    .range-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid #e0edf6;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px #123f6508;
+        opacity: 0;
+        animation: rangeEnter .7s ease forwards;
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+        .range-card:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .range-card:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .range-card:nth-child(3) {
+            animation-delay: .25s;
+        }
+
+        .range-card:nth-child(4) {
+            animation-delay: .35s;
+        }
+
+        .range-card:nth-child(5) {
+            animation-delay: .45s;
+        }
+
+        .range-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px #123f6515;
+        }
+
+    .range-image {
+        height: 210px;
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--pale);
+        overflow: hidden;
+    }
+
+        .range-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform .6s ease;
+        }
+
+    .range-card:hover .range-image img {
+        transform: scale(1.06);
+    }
+
+    .range-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #e5f4ff, #f7fbff);
+        color: var(--blue);
+        font-size: 44px;
+        font-weight: 800;
+    }
+
+    .range-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+    }
+
+    .range-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 39px;
+        height: 39px;
+        margin-bottom: 19px;
+        border-radius: 50%;
+        background: #e6f4ff;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .range-content h2 {
+        margin: 0 0 12px;
+        color: var(--navy);
+        font-size: 21px;
+        font-weight: 850;
+        line-height: 1.4;
+    }
+
+    .range-content p {
+        margin: 0 0 23px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .range-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: auto;
+        padding: 12px 18px;
+        border-radius: 25px;
+        background: var(--navy);
+        color: #fff !important;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: background .25s, transform .25s;
+    }
+
+        .range-link:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+        }
+
+        .range-link span {
+            transition: transform .25s;
+        }
+
+        .range-link:hover span {
+            transform: translateX(4px);
+        }
+
+    .range-footer {
+        width: min(1150px, 90%);
+        margin: 55px auto 0;
+        padding: 35px;
+        border: 1px solid #dfedf8;
+        border-radius: 20px;
+        background: var(--pale);
+        text-align: center;
+    }
+
+        .range-footer h2 {
+            margin: 0 0 12px;
+            color: var(--navy);
+            font-size: 25px;
+            font-weight: 850;
+        }
+
+        .range-footer p {
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .range-footer a {
+            display: inline-block;
+            padding: 13px 24px;
+            border-radius: 28px;
+            background: var(--blue);
+            color: #fff !important;
+            font-size: 12px;
+            font-weight: 800;
+            text-decoration: none !important;
+            transition: background .25s, transform .25s;
+        }
+
+            .range-footer a:hover {
+                background: var(--navy);
+                transform: translateY(-2px);
+            }
+
+    @@keyframes rangeEnter {
+        from {
+            opacity: 0;
+            transform: translateY(22px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@media (max-width: 950px) {
+        .range-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .range-hero {
+            padding: 60px 20px 45px;
+        }
+
+        .range-grid {
+            grid-template-columns: 1fr;
+            gap: 22px;
+        }
+
+        .range-image {
+            height: 230px;
+        }
+
+        .range-footer {
+            padding: 28px 20px;
+        }
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .range-card,
+        .range-hero h1,
+        .range-hero p {
+            animation: none;
+            opacity: 1;
+        }
+
+        .range-card,
+        .range-image img,
+        .range-link,
+        .range-footer a {
+            transition: none;
+        }
+    }
+</style>
+
+<div class="range-page">
+
+    <section class="range-hero">
+        <span class="range-eyebrow">Explore Our Products</span>
+
+        <h1>Our Product <span>Range</span></h1>
+
+        <p>
+            Discover Crescent Diagnostics' diagnostic products,
+            organized into categories to help you find the products
+            you need for your laboratory.
+        </p>
+    </section>
+
+    <section class="range-grid">
+
+        <article class="range-card">
+            <div class="range-image">
+                <img src="~/images/clinical-chemistry.jpg"
+                     alt="Clinical Chemistry"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="range-placeholder" style="display:none;">01</div>
+            </div>
+            <div class="range-content">
+                <span class="range-number">01</span>
+                <h2>Clinical Chemistry</h2>
+                <p>
+                    Enzymes, substrates and diagnostic reagents
+                    for clinical laboratory testing.
+                </p>
+                <a class="range-link"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-category="Clinical Chemistry">
+                    Explore Category <span>→</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="range-card">
+            <div class="range-image">
+                <img src="~/images/serology.jpg"
+                     alt="Serology Latex"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="range-placeholder" style="display:none;">02</div>
+            </div>
+            <div class="range-content">
+                <span class="range-number">02</span>
+                <h2>Serology Latex</h2>
+                <p>
+                    Latex reagents for serological testing
+                    in diagnostic laboratories.
+                </p>
+                <a class="range-link"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-category="Serology Latex">
+                    Explore Category <span>→</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="range-card">
+            <div class="range-image">
+                <img src="~/images/febrile-antigens.jpg"
+                     alt="Febrile Antigens"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="range-placeholder" style="display:none;">03</div>
+            </div>
+            <div class="range-content">
+                <span class="range-number">03</span>
+                <h2>Febrile Antigens</h2>
+                <p>
+                    Diagnostic antigens for laboratory
+                    febrile testing applications.
+                </p>
+                <a class="range-link"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-category="Febrile Antigens">
+                    Explore Category <span>→</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="range-card">
+            <div class="range-image">
+                <img src="~/images/biological-stains.jpg"
+                     alt="Biological Stains"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="range-placeholder" style="display:none;">04</div>
+            </div>
+            <div class="range-content">
+                <span class="range-number">04</span>
+                <h2>Biological Stains</h2>
+                <p>
+                    Laboratory stains for microscopy
+                    and biological applications.
+                </p>
+                <a class="range-link"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-category="Biological Stains">
+                    Explore Category <span>→</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="range-card">
+            <div class="range-image">
+                <img src="~/images/miscellaneous-items.jpg"
+                     alt="Miscellaneous Items"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="range-placeholder" style="display:none;">05</div>
+            </div>
+            <div class="range-content">
+                <span class="range-number">05</span>
+                <h2>Miscellaneous Items</h2>
+                <p>
+                    Additional laboratory reagents and
+                    supporting materials.
+                </p>
+                <a class="range-link"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-category="Miscellaneous Items">
+
+                    Explore Category <span>→</span>
+                </a>
+            </div>
+        </article>
+
+    </section>
+
+    <section class="range-footer">
+        <h2>Looking for a Specific Product?</h2>
+        <p>
+            Browse our complete product catalogue to explore
+            the available diagnostic products.
+        </p>
+        <a asp-controller="Product" asp-action="Index">
+            View All Products →
+        </a>
+    </section>
+
+</div>
+
